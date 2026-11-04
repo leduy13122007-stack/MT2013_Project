@@ -1,0 +1,22 @@
+﻿Variable,Variable Type,Description
+id,Identifier,Unique property identifier
+date,Datetime,Date of sale
+price,Quantitative,Selling price (USD)
+bedrooms,Quantitative,Number of bedrooms
+bathrooms,Quantitative,Number of bathrooms
+sqft_living,Quantitative,Living area (sqft)
+sqft_lot,Quantitative,Lot area (sqft)
+floors,Quantitative,Number of floors
+waterfront,Qualitative,Whether the property has a waterfront view
+view,Ordinal,View quality rating (0-4)
+condition,Ordinal,Property condition rating (1-5)
+grade,Ordinal,Construction and design quality rating
+sqft_above,Quantitative,Above-ground living area (sqft)
+sqft_basement,Quantitative,Basement area (sqft)
+yr_built,Quantitative,Year built
+yr_renovated,Quantitative,Year renovated
+zipcode,Qualitative,ZIP code
+lat,Quantitative,Latitude
+long,Quantitative,Longitude
+sqft_living15,Quantitative,Average living area of nearby 15 houses (sqft)
+sqft_lot15,Quantitative,Average lot area of nearby 15 houses (sqft)
