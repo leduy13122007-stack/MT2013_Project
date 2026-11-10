@@ -1,0 +1,32 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                  price   R-squared:                       0.643
+Model:                            OLS   Adj. R-squared:                  0.643
+Method:                 Least Squares   F-statistic:                     6497.
+Date:                Tue, 10 Nov 2026   Prob (F-statistic):               0.00
+Time:                        15:14:32   Log-Likelihood:            -2.9646e+05
+No. Observations:               21613   AIC:                         5.929e+05
+Df Residuals:                   21606   BIC:                         5.930e+05
+Df Model:                           6                                         
+Covariance Type:            nonrobust                                         
+===============================================================================
+                  coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------
+const        6.859e+06   1.18e+05     58.324      0.000    6.63e+06    7.09e+06
+sqft_living   172.8588      3.239     53.366      0.000     166.510     179.208
+bedrooms    -4.087e+04   2035.694    -20.077      0.000   -4.49e+04   -3.69e+04
+bathrooms    5.696e+04   3343.715     17.036      0.000    5.04e+04    6.35e+04
+grade        1.312e+05   2119.124     61.930      0.000    1.27e+05    1.35e+05
+yr_built    -3891.9154     61.907    -62.867      0.000   -4013.258   -3770.573
+waterfront   7.224e+05   1.74e+04     41.436      0.000    6.88e+05    7.57e+05
+==============================================================================
+Omnibus:                    15765.885   Durbin-Watson:                   1.978
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1011010.859
+Skew:                           2.905   Prob(JB):                         0.00
+Kurtosis:                      35.999   Cond. No.                     2.32e+05
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 2.32e+05. This might indicate that there are
+strong multicollinearity or other numerical problems.
