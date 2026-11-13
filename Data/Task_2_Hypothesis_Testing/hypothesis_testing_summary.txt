@@ -1,0 +1,22 @@
+=== TASK 2 HYPOTHESIS TESTING OUTPUT SUMMARY ===
+
+Total observations analyzed: 21612
+
+1. ONE-SAMPLE T-TEST:
+   T-stat: 0.0334, P-value: 0.486661
+   Conclusion: Insufficient evidence to reject H0.
+
+2. TWO-SAMPLE T-TEST (WATERFRONT vs NON-WATERFRONT):
+   T-stat: 12.8759, P-value: 1.37860434111295e-26
+   Conclusion: Reject H0. Waterfront homes have a statistically significantly higher price.
+
+3. SAMPLE SIZE & POWER ANALYSIS:
+   Required sample size per group (Power=80%): 10
+
+4. PAIRED T-TEST:
+   T-stat: 216.2632, P-value: 0.0
+   Conclusion: There is a statistically significant difference between actual price and baseline price.
+
+5. ONE-WAY ANOVA & POST-HOC:
+   ANOVA F-statistic: 2124.8309553878407
+   Detailed pairwise comparisons saved to: ../../Data/Task_2_Hypothesis_Testing\tukey_hsd_results.csv
