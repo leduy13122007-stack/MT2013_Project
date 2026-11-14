@@ -1,0 +1,7 @@
+test,statistic,p_value,decision
+one-sample t (price),16.05045903941232,1.2225844905402284e-57,Reject H0
+two-sample z (waterfront),12.875934078741398,6.149062355387905e-38,Reject H0
+two-sample Welch t (waterfront),12.875934078741398,1.37860434111295e-26,Reject H0
+"power (waterfront, Delta=100000)",0.2068446869599474,,beta=0.7932; n/group=1442
+paired t (sqft_living - sqft_living15),22.838060657648004,4.302860932667776e-114,Reject H0
+one-way ANOVA (price ~ grade_group),5025.832702458973,0.0,Reject H0
