@@ -364,7 +364,49 @@ if pF < ALPHA:
         + f". Tukey finds {int(tk_df['reject'].sum())} of {len(tk_df)} pairs significantly different.")
 else:
     log("   H0 not rejected -> no post-hoc comparison needed.")
+# ============================================================================
+# E2. ROBUSTNESS CHECK: WELCH ANOVA + GAMES-HOWELL (variances are unequal)
+# ============================================================================
+section("E2. ROBUSTNESS CHECK: WELCH ANOVA + GAMES-HOWELL")
+n_i = np.array([len(g) for g in groups]); m_i = np.array([g.mean() for g in groups])
+v_i = np.array([g.var(ddof=1) for g in groups])
+w = n_i / v_i; W = w.sum(); xw = (w * m_i).sum() / W
+lam = (((1 - w / W) ** 2) / (n_i - 1)).sum()
+F_w = ((w * (m_i - xw) ** 2).sum() / (k - 1)) / (1 + 2 * (k - 2) / (k ** 2 - 1) * lam)
+df1_w, df2_w = k - 1, (k ** 2 - 1) / (3 * lam)
+p_w = stats.f.sf(F_w, df1_w, df2_w)
+log("Welch's ANOVA (does not assume equal variances)")
+log(f"   F = {F_w:.4f}, df1 = {df1_w}, df2 = {df2_w:.1f}, p-value = {fmt_p(p_w)}")
+log(f"   Classical ANOVA: F = {F0:.4f}, p-value = {fmt_p(pF)}")
+summary.append(dict(test="Welch ANOVA (price ~ grade_group)", statistic=F_w, p_value=p_w,
+                    decision=decision(p_w)))
 
+rows = []
+for i in range(k):
+    for j in range(i + 1, k):
+        dif = m_i[i] - m_i[j]
+        se = np.sqrt(v_i[i] / n_i[i] + v_i[j] / n_i[j])
+        dfw = (v_i[i] / n_i[i] + v_i[j] / n_i[j]) ** 2 / (
+            (v_i[i] / n_i[i]) ** 2 / (n_i[i] - 1) + (v_i[j] / n_i[j]) ** 2 / (n_i[j] - 1))
+        q = abs(dif) * np.sqrt(2) / se
+        p_gh = stats.studentized_range.sf(q, k, dfw)
+        half = stats.studentized_range.ppf(1 - ALPHA, k, dfw) * se / np.sqrt(2)
+        rows.append(dict(group_i=levels[i], group_j=levels[j], diff=dif, df=dfw,
+                         p_adj=p_gh, ci_low=dif - half, ci_high=dif + half,
+                         reject=p_gh < ALPHA))
+gh = pd.DataFrame(rows)
+log("\nGames-Howell post-hoc (does not assume equal variances):")
+log(gh.to_string(index=False, float_format=lambda v: f"{v:,.4f}"))
+gh.to_csv(OUT / "E_games_howell.csv", index=False)
+
+# side-by-side comparison with Tukey
+cmp_ = tk_df[["group1", "group2", "meandiff", "reject"]].copy()
+cmp_["GH_diff"] = -gh["diff"].values
+cmp_["GH_reject"] = gh["reject"].values
+cmp_.columns = ["group1", "group2", "Tukey_diff", "Tukey_reject", "GH_diff", "GH_reject"]
+log("\nTukey HSD vs Games-Howell:")
+log(cmp_.to_string(index=False, float_format=lambda v: f"{v:,.2f}"))
+log("   Consistent conclusion: " + str((cmp_["Tukey_reject"] == cmp_["GH_reject"]).all()))
 # ----------------------------------------------------------------------------
 pd.DataFrame(summary).to_csv(OUT / "summary_tests.csv", index=False)
 log(f"\nDone. Results saved in: {OUT}")

@@ -104,4 +104,30 @@ o) Assumption checks
 
    Interpretation: mean price differs across grade groups; ordered by mean: 1 Low (<=6) (295,042) < 2 Average (7) (402,564) < 3 Good (8-9) (612,319) < 4 High (>=10) (1,257,985). Tukey finds 6 of 6 pairs significantly different.
 
+==============================================================================
+E2. ROBUSTNESS CHECK: WELCH ANOVA + GAMES-HOWELL
+==============================================================================
+Welch's ANOVA (does not assume equal variances)
+   F = 3031.8227, df1 = 3, df2 = 5237.3, p-value = < 0.0001
+   Classical ANOVA: F = 5025.8327, p-value = < 0.0001
+
+Games-Howell post-hoc (does not assume equal variances):
+      group_i       group_j          diff          df  p_adj          ci_low       ci_high  reject
+  1 Low (<=6) 2 Average (7) -107,522.2891  4,405.2174 0.0000   -115,362.0809  -99,682.4972    True
+  1 Low (<=6)  3 Good (8-9) -317,277.6585  8,425.0065 0.0000   -327,282.8096 -307,272.5074    True
+  1 Low (<=6) 4 High (>=10) -962,943.3219  1,705.8695 0.0000 -1,008,366.2441 -917,520.3997    True
+2 Average (7)  3 Good (8-9) -209,755.3695 13,712.0886 0.0000   -218,379.5282 -201,131.2108    True
+2 Average (7) 4 High (>=10) -855,421.0329  1,664.0714 0.0000   -900,560.6699 -810,281.3958    True
+ 3 Good (8-9) 4 High (>=10) -645,665.6634  1,727.6954 0.0000   -691,230.5416 -600,100.7853    True
+
+Tukey HSD vs Games-Howell:
+       group1        group2  Tukey_diff  Tukey_reject    GH_diff  GH_reject
+  1 Low (<=6) 2 Average (7)  107,522.29          True 107,522.29       True
+  1 Low (<=6)  3 Good (8-9)  317,277.66          True 317,277.66       True
+  1 Low (<=6) 4 High (>=10)  962,943.32          True 962,943.32       True
+2 Average (7)  3 Good (8-9)  209,755.37          True 209,755.37       True
+2 Average (7) 4 High (>=10)  855,421.03          True 855,421.03       True
+ 3 Good (8-9) 4 High (>=10)  645,665.66          True 645,665.66       True
+   Consistent conclusion: True
+
 Done. Results saved in: C:\Users\truon\MT2013_Project\Data\Task_2_Hypothesis_Testing
