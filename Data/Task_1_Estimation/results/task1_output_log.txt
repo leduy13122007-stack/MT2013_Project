@@ -1,0 +1,35 @@
+=======================================================
+TASK 1 - ESTIMATION
+=======================================================
+Dataset: kc_house_data_cleaned.csv
+Dataset shape: (21612, 21)
+Quantitative variable: price
+Missing values: 0
+
+1. POINT ESTIMATION
+-------------------------------------------------------
+Variable: price
+Sample size (n): 21,612
+Total selling price: $11,672,285,008.00
+Sample mean: $540,083.52
+
+2. 95% CONFIDENCE INTERVAL
+-------------------------------------------------------
+Large-sample CI: x-bar +/- 1.96 * s / sqrt(n)
+Sample size: 21612
+Sample mean: $540,083.52
+Sample standard deviation: $367,135.06
+Standard error: $2,497.34
+Margin of error: $4,894.79
+95% Confidence Interval: ($535,188.72, $544,978.31)
+
+3. ASSUMPTIONS AND DATA DISTRIBUTION
+-------------------------------------------------------
+Skewness: 4.0240
+Histogram and boxplot saved successfully.
+
+=======================================================
+TASK 1 COMPLETED
+=======================================================
+Results and log saved in: D:\MT2013_Project\Data\Task_1_Estimation\results
+Plots saved in: D:\MT2013_Project\Data\Task_1_Estimation\plots

@@ -1,0 +1,189 @@
+
+=======================================================
+TASK 2 - HYPOTHESIS TESTING
+=======================================================
+Dataset: kc_house_data_cleaned.csv
+Number of observations: 21612
+Number of columns: 22
+Significance level (alpha): 0.05
+Repeated property IDs: 176 IDs appear more than once (177 extra rows). No observation is removed here.
+
+=======================================================
+3.3.1 ONE-SAMPLE HYPOTHESIS TEST (mean price)
+=======================================================
+a) Research question: is the mean sale price different from the benchmark of 500,000 USD?
+b) Hypothesized value mu0 = 500,000 USD (benchmark / target)
+c) H0: mu = 500,000     H1: mu != 500,000
+d) Significance level alpha = 0.05
+e) Sample size (n): 21612
+   Sample mean: $540,083.52
+   Sample standard deviation: $367,135.06
+   Standard error: $2,497.34
+   t0 = (x-bar - mu0) / (s / sqrt(n)) = 16.0505, df = 21611
+   P-value: < 0.0001
+   95% CI for mu: [$535,188.54, $544,978.50]
+f) Decision: Reject H0
+   Conclusion: at alpha = 0.05 there is sufficient evidence that the mean sale price differs from 500,000 USD (sample mean 540,084 USD).
+
+One-sample test results saved successfully.
+
+=======================================================
+3.3.2 TWO-SAMPLE INFERENCE (price: waterfront vs non-waterfront)
+=======================================================
+g) H0: mu1 - mu2 = 0     H1: mu1 - mu2 != 0
+   (group 1 = waterfront, group 2 = non-waterfront)
+   Group 1: n1 = 163, mean = $1,661,876.02, SD = $1,120,371.73
+   Group 2: n2 = 21449, mean = $531,558.54, SD = $341,606.75
+   Observed difference (x1-bar - x2-bar): $1,130,317.48
+
+h) z-test (large samples, s^2 used in place of sigma^2)
+   Z0 = (x1-bar - x2-bar - Delta0) / sqrt(s1^2/n1 + s2^2/n2) = 12.8759
+   P-value: < 0.0001  ->  Reject H0
+   95% CI for mu1 - mu2: [$958,261.49, $1,302,373.47]
+
+i) Variances unknown: pooled t-test vs Welch t-test
+   Levene test (median-centred): W = 781.866, p = < 0.0001;  s1^2 / s2^2 = 10.76
+   Pooled t-test: t0 = 40.6252, df = 21610, p = < 0.0001; 95% CI [$1,075,782.24, $1,184,852.72]
+   Welch t-test : t0 = 12.8759, df = 162.2, p = < 0.0001; 95% CI [$956,968.34, $1,303,666.62]
+   Choice: Welch t-test, because Levene's test rejects equal variances at alpha = 0.05 (and n1 = 163 << n2 = 21449).
+
+k) Interpretation and consistency
+   Welch 95% CI = [$956,968.34, $1,303,666.62]; Delta0 = 0 is OUTSIDE the CI -> reject H0
+   Test decision: Reject H0  =>  consistent with the confidence interval.
+   Conclusion: at alpha = 0.05, waterfront houses sell for significantly more on average (estimated difference 1,130,317 USD, 95% CI 956,968 to 1,303,667).
+
+Two-sample results saved successfully.
+
+=======================================================
+3.3.3 TYPE II ERROR, POWER AND SAMPLE SIZE
+=======================================================
+j) Practically meaningful difference Delta = 100,000 USD, alpha = 0.05
+   Assumptions: two-sided z-approximation, sample variances s1^2, s2^2 used as
+   the true variances, and the current group sizes n1, n2 for the power calculation.
+   SE of the difference = $87,785.28;  Delta / SE = 1.139
+   beta = P(Type II error) = Phi(z_a/2 - Delta/SE) - Phi(-z_a/2 - Delta/SE)
+   beta (Type II error probability): 0.7932
+   Power = 1 - beta: 0.2068
+
+   Required sample size for power 0.90 (equal n per group)
+   n = (z_a/2 + z_b)^2 * (s1^2 + s2^2) / Delta^2
+     = (1.960 + 1.282)^2 * (1,255,232,816,100 + 116,695,172,010) / 100,000^2
+   Required n per group: 1442
+   (This formula ignores the far rejection tail, which is negligible here.)
+   Interpretation: with the current samples the test detects a 100,000 USD difference with probability 21% only; about 1442 houses per group are needed to reach 90%.
+
+Power analysis results saved successfully.
+
+=======================================================
+3.3.4 PAIRED t-TEST (sqft_living vs sqft_living15)
+=======================================================
+l) Pairs: each house vs the average of its 15 nearest neighbours (dependent samples)
+   d_i = sqft_living_i - sqft_living15_i;  one-sample t-test on d_i, df = n - 1
+   H0: mu_d = 0     H1: mu_d != 0
+   Sample size (n): 21612
+   Mean difference (d-bar): 93.34 sqft
+   SD of differences (s_d): 600.82 sqft
+   t0 = d-bar / (s_d / sqrt(n)) = 22.8381, df = 21611
+   P-value: < 0.0001
+   95% CI for mu_d: [85.33, 101.35]
+   Decision: Reject H0
+   Conclusion: a house's living area differs significantly from its neighbours' average (on average 93 sqft larger).
+   Note: houses within the same area share neighbours, so the d_i may be spatially
+   correlated; the independence of the pairs is assumed, not verified.
+
+Paired t-test results saved successfully.
+
+=======================================================
+3.3.5 ONE-WAY ANOVA (price by grade group)
+=======================================================
+m) Response: price;  factor: grade group (k = 4 groups, N = 21612)
+   H0: mu_1 = mu_2 = ... = mu_k     H1: at least two means differ
+   Significance level: 0.05
+
+Group descriptive statistics:
+               count        mean        std     median
+grade_group                                           
+1 Low (<=6)     2313   295041.54  123556.03   270000.0
+2 Average (7)   8980   402563.82  155865.46   375000.0
+3 Good (8-9)    8683   612319.19  272646.74   561600.0
+4 High (>=10)   1636  1257984.86  706848.37  1038500.0
+
+n) Classical one-way ANOVA table (main result reported)
+   Source                         SS    df                       MS         F0  p_value
+Treatment 1,197,185,501,475,103.2500     3 399,061,833,825,034.4375 5,025.8327   0.0000
+    Error 1,715,721,277,604,889.7500 21608      79,402,132,432.6587        NaN      NaN
+    Total 2,912,906,779,079,993.5000 21611                      NaN        NaN      NaN
+   F0 = MS_Treatment / MSE = 5025.8327, p-value = < 0.0001, eta^2 = SS_Tr / SS_T = 0.4110
+   Decision: Reject H0
+
+o) Assumption checks
+   Independence: each row is a separate sale, but the dataset contains repeated
+   property IDs (176 IDs sold more than once, 177 extra rows).
+   Repeated sales of the same house are not strictly independent, so independence
+   is ASSUMED (approximately) and is not guaranteed by the data.
+   Normality of residuals: see Q-Q plot (skewness = 4.07, excess kurtosis = 49.34); with large group sizes the F-test is
+   fairly robust to moderate non-normality, but the price is strongly right-skewed.
+   Equal variances: Levene F = 1255.907, p = < 0.0001;  Bartlett chi2 = 12009.413, p = < 0.0001
+   -> Equal variances are REJECTED. The classical ANOVA / Tukey HSD results are
+      therefore cross-checked with Welch ANOVA / Games-Howell below.
+
+Classical ANOVA rejects H0 -> post-hoc multiple comparisons
+Tukey HSD (assumes equal variances):
+       group1        group2    meandiff  p-adj       lower       upper  reject
+  1 Low (<=6) 2 Average (7) 107522.2891    0.0  90641.2945 124403.2836    True
+  1 Low (<=6)  3 Good (8-9) 317277.6585    0.0 300337.6354 334217.6816    True
+  1 Low (<=6) 4 High (>=10) 962943.3219    0.0 939555.8408 986330.8030    True
+2 Average (7)  3 Good (8-9) 209755.3695    0.0 198859.0829 220651.6560    True
+2 Average (7) 4 High (>=10) 855421.0329    0.0 835959.8163 874882.2495    True
+ 3 Good (8-9) 4 High (>=10) 645665.6634    0.0 626153.2223 665178.1045    True
+
+Fisher's LSD (t with N-k df, pooled MSE; NOT adjusted for multiple comparisons):
+      group_i       group_j          diff         LSD  p_value  significant
+  1 Low (<=6) 2 Average (7) -107,522.2891 12,878.5563   0.0000         True
+  1 Low (<=6)  3 Good (8-9) -317,277.6585 12,923.5894   0.0000         True
+  1 Low (<=6) 4 High (>=10) -962,943.3219 17,842.3725   0.0000         True
+2 Average (7)  3 Good (8-9) -209,755.3695  8,312.8064   0.0000         True
+2 Average (7) 4 High (>=10) -855,421.0329 14,847.0147   0.0000         True
+ 3 Good (8-9) 4 High (>=10) -645,665.6634 14,886.0940   0.0000         True
+
+Interpretation: mean price differs across grade groups; ordered by mean: 1 Low (<=6) (295,042) < 2 Average (7) (402,564) < 3 Good (8-9) (612,319) < 4 High (>=10) (1,257,985). Tukey finds 6 of 6 pairs significantly different.
+
+=======================================================
+3.3.5b ROBUSTNESS CHECK: WELCH ANOVA + GAMES-HOWELL
+=======================================================
+Role of these methods: the classical ANOVA / Tukey HSD above are the main results
+reported. Welch ANOVA and Games-Howell do NOT assume equal variances and serve as a
+robustness check, because the equal-variance assumption is rejected.
+
+Welch's ANOVA (does not assume equal variances)
+   F = 3031.8227, df1 = 3, df2 = 5237.3, p-value = < 0.0001
+   Decision: Reject H0
+   Classical ANOVA: F = 5025.8327, p-value = < 0.0001 (Reject H0)
+   Same decision as classical ANOVA: True
+
+Games-Howell post-hoc (does not assume equal variances; diff = mean_i - mean_j)
+      group_i       group_j          diff          df  p_adj          ci_low       ci_high  reject
+  1 Low (<=6) 2 Average (7) -107,522.2891  4,405.2174 0.0000   -115,362.0809  -99,682.4972    True
+  1 Low (<=6)  3 Good (8-9) -317,277.6585  8,425.0065 0.0000   -327,282.8096 -307,272.5074    True
+  1 Low (<=6) 4 High (>=10) -962,943.3219  1,705.8695 0.0000 -1,008,366.2441 -917,520.3997    True
+2 Average (7)  3 Good (8-9) -209,755.3695 13,712.0886 0.0000   -218,379.5282 -201,131.2108    True
+2 Average (7) 4 High (>=10) -855,421.0329  1,664.0714 0.0000   -900,560.6699 -810,281.3958    True
+ 3 Good (8-9) 4 High (>=10) -645,665.6634  1,727.6954 0.0000   -691,230.5416 -600,100.7853    True
+
+Tukey HSD vs Games-Howell (diff = mean(group2) - mean(group1)):
+       group1        group2  Tukey_diff  Tukey_reject    GH_diff  GH_reject
+  1 Low (<=6) 2 Average (7)  107,522.29          True 107,522.29       True
+  1 Low (<=6)  3 Good (8-9)  317,277.66          True 317,277.66       True
+  1 Low (<=6) 4 High (>=10)  962,943.32          True 962,943.32       True
+2 Average (7)  3 Good (8-9)  209,755.37          True 209,755.37       True
+2 Average (7) 4 High (>=10)  855,421.03          True 855,421.03       True
+ 3 Good (8-9) 4 High (>=10)  645,665.66          True 645,665.66       True
+   Consistent conclusion for all pairs: True
+
+ANOVA results saved successfully.
+
+=======================================================
+TASK 2 COMPLETED
+=======================================================
+Tables and log saved in: D:\MT2013_Project\Data\Task_2_Hypothesis_Testing\results
+Plots saved in: D:\MT2013_Project\Data\Task_2_Hypothesis_Testing\plots

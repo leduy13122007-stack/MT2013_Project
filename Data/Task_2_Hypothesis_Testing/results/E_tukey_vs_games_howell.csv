@@ -1,0 +1,7 @@
+group1,group2,Tukey_diff,Tukey_reject,GH_diff,GH_reject
+1 Low (<=6),2 Average (7),107522.2891,True,107522.28905363986,True
+1 Low (<=6),3 Good (8-9),317277.6585,True,317277.65850455733,True
+1 Low (<=6),4 High (>=10),962943.3219,True,962943.3219114983,True
+2 Average (7),3 Good (8-9),209755.3695,True,209755.36945091747,True
+2 Average (7),4 High (>=10),855421.0329,True,855421.0328578585,True
+3 Good (8-9),4 High (>=10),645665.6634,True,645665.663406941,True

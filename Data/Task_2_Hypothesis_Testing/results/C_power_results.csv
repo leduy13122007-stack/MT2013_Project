@@ -1,0 +1,9 @@
+Metric,Value
+Delta (USD),100000.0
+alpha,0.05
+SE of difference,87785.28014820078
+Delta / SE,1.1391431437158723
+beta (Type II error),0.7931553130400526
+Power,0.2068446869599474
+Target power,0.9
+Required n per group,1442.0

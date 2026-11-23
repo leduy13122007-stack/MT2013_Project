@@ -1,0 +1,9 @@
+Check,Value
+Levene F,1255.9072080408978
+Levene p,0.0
+Bartlett chi2,12009.413186864504
+Bartlett p,0.0
+Residual skewness,4.0721376264713
+Residual excess kurtosis,49.339268357862764
+Repeated property IDs,176.0
+Extra rows from repeated IDs,177.0
